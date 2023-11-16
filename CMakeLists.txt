@@ -261,7 +261,7 @@ if(NOT BROTLI_DISABLE_TESTS)
             -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/run-roundtrip-test.cmake)
       endforeach()
     else()
-      message(WARNING "Test file ${INPUT} does not exist.")
+      message(NOTICE "Test file ${INPUT} does not exist; OK on tarball builds; consider running scripts/download_testdata.sh before configuring.")
     endif()
   endforeach()
 
@@ -358,6 +358,10 @@ if(NOT BROTLI_BUNDLED_MODE)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/libbrotlienc.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 endif()  # BROTLI_BUNDLED_MODE
+
+INSTALL(FILES "docs/brotli.1" DESTINATION "${SHARE_INSTALL_PREFIX}/man/man1")
+INSTALL(FILES docs/constants.h.3 docs/decode.h.3 docs/encode.h.3 docs/types.h.3
+  DESTINATION "${SHARE_INSTALL_PREFIX}/man/man3")
 
 if (ENABLE_COVERAGE STREQUAL "yes")
   SETUP_TARGET_FOR_COVERAGE(coverage test coverage)
